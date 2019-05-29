@@ -21,6 +21,11 @@ export class AppComponent {
       icon: 'list'
     },
     {
+      title: 'Movie',
+      url: '/movie',
+      icon: 'list'
+    },
+    {
       title: 'Filtry',
       url: '/filter',
       icon: 'list'

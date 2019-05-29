@@ -3,7 +3,7 @@ import { FormControl, Validators, FormBuilder, FormGroup, AbstractControl } from
 import { CustomValidators } from './custom-validators';
 import { NavController } from 'ionic-angular';
 import { FilterPage } from '../filter/filter.page';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +25,8 @@ export class RegisterPage  {
   constructor(
     
     private fb: FormBuilder,
-    public navCtrl: NavController
+    private router: Router
+
   ) {
     
     this.frmSignup = this.createSignupForm();
@@ -37,7 +38,7 @@ export class RegisterPage  {
 // }
 
 abort(){
-this.navCtrl.push(FilterPage)
+  this.router.navigateByUrl('/filter');
 }
 
 createSignupForm(): FormGroup {

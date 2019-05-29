@@ -16,7 +16,8 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule'
   },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  { path: 'filter', loadChildren: './filter/filter.module#FilterPageModule' }
+  { path: 'filter', loadChildren: './filter/filter.module#FilterPageModule' },
+  { path: 'movie', loadChildren: './movie/movie.module#MoviePageModule' }
 ];
 
 @NgModule({
