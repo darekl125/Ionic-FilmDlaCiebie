@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.auth.login(this.credentials)
-      .then(() => this.router.navigate(['/register']))
+      .then(() => this.router.navigate(['/filter']))
       .catch(err => { if (err.message=="The password is invalid or the user does not have a password.") {
         err.message = "Login lub hasło nieprawidłowe";
         document.getElementById("loginError").innerHTML = err.message;}

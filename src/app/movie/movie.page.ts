@@ -4,6 +4,10 @@ import { Filter } from '../models/filters';
 import { FilterPage } from '../filter/filter.page';
 import { Router } from '@angular/router';
 import { YouTubeSearchService } from '../youtube-search/youtube-search.service';
+import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
+import { Shake } from '@ionic-native/shake/ngx';
+import { Platform } from 'ionic-angular';
+
 
 @Component({
   selector: 'app-movie',
@@ -11,6 +15,11 @@ import { YouTubeSearchService } from '../youtube-search/youtube-search.service';
   styleUrls: ['./movie.page.scss'],
 })
 export class MoviePage implements OnInit {
+
+  /**motion */
+  data: any;
+  subscription: any;
+/*** */
 
   /*YT*/
   player: YT.Player;
@@ -43,9 +52,12 @@ export class MoviePage implements OnInit {
   show: boolean = false;
 
   constructor(private router: Router,
-              private youtube: YouTubeSearchService) {
-                this.initializePage();
-  }
+    private youtube: YouTubeSearchService,
+    private platform: Platform,
+    private shake: Shake) {
+      this.initializePage();
+      this.shakePhone();
+}
 
   ngOnInit() {
   }
@@ -152,6 +164,36 @@ export class MoviePage implements OnInit {
   clickTrailer(){
     this.show = true;
     this.player.loadVideoById(String(this.youtube.getFilmId()));
+  }
+
+  startMotion(){
+    var previousValue = 0;
+
+    var options: DeviceMotionAccelerometerOptions = {
+      frequency: 500
+    };
+
+    this.subscription = DeviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => {
+    this.data = acceleration;
+
+     if (acceleration.x - previousValue > 5 ){
+        this.clickRandomNextFilm();
+     }
+     previousValue = acceleration.x;
+    }) 
+  }
+
+  stopMotion(){
+    this.subscription.unsubscribe();
+  }
+
+  shakePhone(){
+    this.platform.ready().then(() => {
+      this.shake.startWatch().subscribe(data => {
+        window.alert('Shake!');
+        console.log('shake!!');
+      })
+    })
   }
 
 }

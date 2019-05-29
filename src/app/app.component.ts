@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  islogged : string;
 
   rootPage;
   public appPages = [
@@ -64,8 +65,10 @@ export class AppComponent {
         user => {
           if (user) {
             this.router.navigateByUrl('/filter');
+            this.islogged = "Wyloguj";
           } else {
             this.router.navigateByUrl('/register');
+            this.islogged = "Zaloguj";
           }
         },
         () => {
@@ -84,5 +87,7 @@ logOut(){
 goToFilterPage(){
 this.router.navigateByUrl('/filter');
 }
+
+
 }
   
