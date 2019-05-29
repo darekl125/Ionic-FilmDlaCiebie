@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
@@ -19,13 +17,21 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/database';
-
+import { HttpModule } from '@angular/http';
+import {YoutubePlayerModule} from 'ng2-youtube-player';
+import { youTubeSearchInjectables } from './youtube-search/youtube-search-injectables';
+import { YouTubeSearchBoxComponent } from './youtube-search/youtube-search-box.component';
+import { YouTubeSearchResultComponent } from './youtube-search/youtube-search-result.component';
+import { YouTubeSearchComponent } from './youtube-search/youtube-search.component';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,
+                 YouTubeSearchBoxComponent,
+                 YouTubeSearchResultComponent,
+                 YouTubeSearchComponent  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -37,11 +43,14 @@ import 'firebase/database';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    YoutubePlayerModule,
+    HttpModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     FilmService,AngularFirestore,
+    youTubeSearchInjectables,
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

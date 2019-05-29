@@ -6,6 +6,7 @@ import { FilmService } from '../services/film.service';
 import { Router } from '@angular/router';
 import { Filter } from '../models/filters';
 import { map, startWith } from 'rxjs/operators';
+import { YouTubeSearchResult } from '../youtube-search/youtube-search-result';
 
 
 @Component({
@@ -15,8 +16,8 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class FilterPage implements OnInit {
 
-  // @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
-  // @Output() results: EventEmitter<YouTubeSearchResult[]> = new EventEmitter<YouTubeSearchResult[]>();
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() results: EventEmitter<YouTubeSearchResult[]> = new EventEmitter<YouTubeSearchResult[]>();
 
   valueOfSlider=0;
 
@@ -43,6 +44,18 @@ export class FilterPage implements OnInit {
   movieGenre = new FormControl();
   movieGenreList: string[] = [""]; 
   //END genres LOV
+
+  /*YT*/
+  player: YT.Player;
+
+  savePlayer (player){
+    this.player = player;
+    console.log('player instance', player);
+  }
+
+  onStateChange(event){
+  }
+  /*****/
 
   
 
