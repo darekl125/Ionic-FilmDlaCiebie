@@ -241,7 +241,7 @@ export class FilterPage implements OnInit {
 
   getYears() :string[] {
     var years :string[] = [];
-    for (var i = 1950; i < 2030; i++) {
+    for (var i = 2020; i > 1950; i--) {
       years.push(i.toString());
     }
     return years;
