@@ -23,10 +23,12 @@ import { youTubeSearchInjectables } from './youtube-search/youtube-search-inject
 import { YouTubeSearchBoxComponent } from './youtube-search/youtube-search-box.component';
 import { YouTubeSearchResultComponent } from './youtube-search/youtube-search-result.component';
 import { YouTubeSearchComponent } from './youtube-search/youtube-search.component';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import * as firebase  from 'firebase';
 
 
 
-
+firebase.initializeApp(environment.firebase)
 @NgModule({
   declarations: [AppComponent,
                  YouTubeSearchBoxComponent,
@@ -52,7 +54,9 @@ import { YouTubeSearchComponent } from './youtube-search/youtube-search.componen
     FilmService,AngularFirestore,
     youTubeSearchInjectables,
     
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy
+       },
+       GooglePlus
   ],
   bootstrap: [AppComponent]
 })

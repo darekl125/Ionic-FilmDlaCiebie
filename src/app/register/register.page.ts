@@ -4,6 +4,10 @@ import { CustomValidators } from './custom-validators';
 import { NavController } from 'ionic-angular';
 import { FilterPage } from '../filter/filter.page';
 import { Router } from '@angular/router';
+import * as firebase  from 'firebase';
+import { GooglePlus} from '@ionic-native/google-plus/ngx';
+import { AuthenticationService } from '../services/authentication.service';
+
 
 
 @Component({
@@ -25,7 +29,9 @@ export class RegisterPage  {
   constructor(
     
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public googleplus: GooglePlus,
+    private auth: AuthenticationService
 
   ) {
     
@@ -37,8 +43,49 @@ export class RegisterPage  {
 
 // }
 
+googleLogin(){
+  this.googleplus.login({
+    'webClientId': '153529790154-3c6mlj3o3hp34g8krin7c8dqvvmvj337.apps.googleusercontent.com',
+    'offline': true
+  }).then(res=>{
+    firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+    .then(suc => {
+      this.router.navigateByUrl('/filter');
+    }).catch(ns=>{
+      alert("NOT SUCCESS")
+    })
+  })
+}
+
+errorMessage: string;
+registerInfo: string;
+register() {
+  this.auth.register(this.credentials)
+    .then(() => this.router.navigateByUrl('/home'))
+    // .catch(err => console.log(err.message))
+    .catch(err => {if (err.message=="The email address is already in use by another account."){
+      err.message="Ten adres email jest już w użyciu";
+      this.errorMessage=err.message;
+    }
+    else 
+    this.errorMessage=err.message;
+})}
+
+logOut(){
+  this.auth.logout()
+}
+
 abort(){
   this.router.navigateByUrl('/filter');
+}
+
+haveAccount(){
+  this.router.navigateByUrl('/login');
+}
+
+submit() {
+  // do signup or something
+  console.log(this.frmSignup.value);
 }
 
 createSignupForm(): FormGroup {

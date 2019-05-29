@@ -3,12 +3,19 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthenticationService } from './services/authentication.service';
+import { RegisterPage} from './register/register.page';
+import { FilterPage} from './filter/filter.page';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+
+  rootPage;
   public appPages = [
     {
       title: 'Home',
@@ -31,24 +38,51 @@ export class AppComponent {
       icon: 'list'
     },
     {
+     
       title: 'Wyloguj',
       url: '/register',
-      icon: 'list'
+      icon: 'list',
+      click: 'logOut()'
     }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private auth: AuthenticationService,
+    private router: Router,
   ) {
     this.initializeApp();
   }
 
-  initializeApp() {
+	initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.auth.afAuth.authState
+      .subscribe(
+        user => {
+          if (user) {
+            this.router.navigateByUrl('/filter');
+          } else {
+            this.router.navigateByUrl('/register');
+          }
+        },
+        () => {
+          this.router.navigateByUrl('/register');
+        }
+      );
     });
-  }
+
+
 }
+logOut(){
+  this.auth.logout()
+  .then(() => this.router.navigateByUrl('/register'));
+}
+
+goToFilterPage(){
+this.router.navigateByUrl('/filter');
+}
+}
+  
