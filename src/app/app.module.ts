@@ -32,6 +32,8 @@ import { GestureConfig } from '@angular/material';
 
 
 
+
+
 firebase.initializeApp(environment.firebase)
 @NgModule({
   declarations: [AppComponent,
@@ -50,13 +52,16 @@ firebase.initializeApp(environment.firebase)
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     YoutubePlayerModule,
-    HttpModule
+    HttpModule,
+ 
   ],
   providers: [
     StatusBar,
     SplashScreen,
     FilmService,AngularFirestore,
     youTubeSearchInjectables,
+ 
+ 
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy
        },

@@ -21,6 +21,7 @@ export class MoviePage implements OnInit {
   subscription: any;
 /*** */
 
+
   /*YT*/
   player: YT.Player;
 
@@ -60,6 +61,7 @@ export class MoviePage implements OnInit {
 }
 
   ngOnInit() {
+    
   }
 
   initializePage(){
@@ -167,7 +169,9 @@ export class MoviePage implements OnInit {
   }
 
   startMotion(){
-    var previousValue = 0;
+    var previousValueX = 0;
+    var previousValueY = 0;
+    var previousValueZ = 0;
 
     var options: DeviceMotionAccelerometerOptions = {
       frequency: 500
@@ -176,10 +180,12 @@ export class MoviePage implements OnInit {
     this.subscription = DeviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => {
     this.data = acceleration;
 
-     if (acceleration.x - previousValue > 5 ){
+     if (acceleration.x - previousValueX > 5 || acceleration.y - previousValueY > 5 || acceleration.z - previousValueZ > 5 ){
         this.clickRandomNextFilm();
      }
-     previousValue = acceleration.x;
+     previousValueX = acceleration.x;
+     previousValueY = acceleration.y;
+     previousValueZ = acceleration.z;
     }) 
   }
 

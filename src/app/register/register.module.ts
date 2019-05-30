@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { RegisterPage } from './register.page';
 import { FilterPage } from '../filter/filter.page'
+import { AlertController } from 'ionic-angular';
+import { App, Config } from 'ionic-angular';
+
+
 
 
 
@@ -23,8 +27,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   declarations: [RegisterPage]
+  ,
+  providers: [AlertController, App, Config]
 })
 export class RegisterPageModule {}
